@@ -24,6 +24,9 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.app.Activity;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -33,15 +36,34 @@ public class AsyncJSONParser extends AsyncTask<String, Void, JSONObject> {
 	public JSONObject jObj = null;
 	public String json = "";
 	private List<NameValuePair> params = new ArrayList<NameValuePair>();
+	private WerewolfActivity caller;
 
-	// default constructor
-	public AsyncJSONParser() {
+	// default constructor, includes caller for preferences access
+	public AsyncJSONParser(WerewolfActivity caller) {
+		this.caller = caller;
+	}
+	
+	// convenience constructor which pre-populates params with a single value
+	public AsyncJSONParser(WerewolfActivity caller, String name, String value) {
+		this.caller = caller;
+		addParameter(name, value);
 	}
 
 	@Override
 	protected JSONObject doInBackground(String... urls) {
 
 		String url = urls[0];
+		String function = null; //extra information for the callback
+		
+		if (urls.length > 1) {
+			function = urls[1];
+		}
+		
+		//Get the user's information from preferences
+		SharedPreferences pref = caller.getApplicationContext().getSharedPreferences("MyPref", 0); // 0 - for private mode
+		String auth = pref.getString("HTTP_AUTHORIZATION", null);
+		addParameter("HTTP_AUTHORIZATION", auth);	
+		
 
 		// Making HTTP request
 		try {
@@ -87,18 +109,29 @@ public class AsyncJSONParser extends AsyncTask<String, Void, JSONObject> {
 		} catch (JSONException e) {
 			Log.e("JSON Parser", "Error parsing data " + e.toString());
 		}
+		Log.v("JSON Parser", jObj.toString());
 
-		// return JSON String
-		return jObj;
+		// return JSON String with a function call to the activity
+		try {
+			caller.onPostComplete(jObj, function);
+		} catch (JSONException e) {
+			Log.e("JSON Parser", jObj.toString());
+			Log.e("JSON Parser", e.getMessage());
+		}
+		
+		//Dummy return isn't used.
+		return null;
 	}
+	
+	
 
-	// convenience constructor which prepopulates params with a single value
-	public AsyncJSONParser(String name, String value) {
-		addParameter(name, value);
-	}
 
+	// Methods for setting the parameters of the post request.
 	public void addParameter(String name, String value) {
 		params.add(new WerewolfNVP(name, value));
+	}	
+	public void setParams(List<NameValuePair> params){
+		this.params = params;
 	}
 
 }

@@ -21,7 +21,7 @@
         android:textColor="#eee" />
 
     <EditText
-        android:id="@+id/txtUsername"
+        android:id="@+id/lblUsername"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
