@@ -5,21 +5,26 @@ import java.io.UnsupportedEncodingException;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Base64;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 public class LoginActivity extends WerewolfActivity {
-
-	@Override
+		
+	@SuppressLint("HandlerLeak") @Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
@@ -39,7 +44,28 @@ public class LoginActivity extends WerewolfActivity {
 				launchCreateAccount();
 			}
 		});
+		
+		setProgressBarEnabled(false);
+		setErrorMessage("");
+		
+		mHandler = new Handler() {
+	        @Override
+	        public void handleMessage(Message msg) {
+	        	JSONObject json = (JSONObject) msg.obj;
+	    		try {
+					if (json.getString("message").equals("success")){
+						launchUserActivity();
+					} else {
+						setProgressBarEnabled(false);
+			    		setErrorMessage("Incorrect Username or Password");
+					}
+				} catch (JSONException e) {
+					Log.e("LoginActivity", e.getMessage());
+				}
 
+	        }
+		};
+		
 	}
 
 	public void login() {
@@ -69,19 +95,17 @@ public class LoginActivity extends WerewolfActivity {
 		
 		Log.v("Login", WerewolfUrls.PING);
 		new AsyncJSONParser(this).execute(WerewolfUrls.PING);
-	}
+		setProgressBarEnabled(true);
+		setErrorMessage("");
+	}	
 	
-	public void onPostComplete (JSONObject json, String method) throws JSONException{
-		Log.v("LOGIN", json.toString());
-		if (json.getString("message").equals("success")){
-			launchUserActivity();
-		}
-	}
 	
 	public void launchUserActivity() {
 		Intent intent = new Intent(this, UserActivity.class);
 		startActivity(intent);
+		finish();
 	}
+	
 
 	public void launchCreateAccount() {
 		Intent intent = new Intent(this, CreateAccountActivity.class);

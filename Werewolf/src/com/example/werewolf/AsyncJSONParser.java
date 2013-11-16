@@ -28,6 +28,7 @@ import android.app.Activity;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.AsyncTask;
+import android.os.Message;
 import android.util.Log;
 
 public class AsyncJSONParser extends AsyncTask<String, Void, JSONObject> {
@@ -53,11 +54,6 @@ public class AsyncJSONParser extends AsyncTask<String, Void, JSONObject> {
 	protected JSONObject doInBackground(String... urls) {
 
 		String url = urls[0];
-		String function = null; //extra information for the callback
-		
-		if (urls.length > 1) {
-			function = urls[1];
-		}
 		
 		//Get the user's information from preferences
 		SharedPreferences pref = caller.getApplicationContext().getSharedPreferences("MyPref", 0); // 0 - for private mode
@@ -111,13 +107,9 @@ public class AsyncJSONParser extends AsyncTask<String, Void, JSONObject> {
 		}
 		Log.v("JSON Parser", jObj.toString());
 
-		// return JSON String with a function call to the activity
-		try {
-			caller.onPostComplete(jObj, function);
-		} catch (JSONException e) {
-			Log.e("JSON Parser", jObj.toString());
-			Log.e("JSON Parser", e.getMessage());
-		}
+		Message msg = new Message();
+		msg.obj = jObj;
+		caller.mHandler.sendMessage(msg);
 		
 		//Dummy return isn't used.
 		return null;

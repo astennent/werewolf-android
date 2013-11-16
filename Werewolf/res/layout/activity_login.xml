@@ -64,4 +64,22 @@
 
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/lblError"
+        style="@style/AppTheme"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#8000"
+        android:padding="5dp"
+        android:text="Incorrect Username or Password"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="#fff" />
+
+    <ProgressBar
+        android:id="@+id/progressBar1"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="invisible" />
+
 </LinearLayout>

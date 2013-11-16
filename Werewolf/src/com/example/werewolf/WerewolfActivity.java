@@ -1,13 +1,36 @@
 package com.example.werewolf;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.app.Activity;
+import android.os.Handler;
+import android.view.View;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 public abstract class WerewolfActivity extends Activity{
-	public void onPostComplete (JSONObject json, String method) throws JSONException{
-		//TO BE CALLED ON COMPLETION OF AsyncJSONParser
-		//IMPLEMENTATION CHANGES PER ACTIVITY
+	Handler mHandler;
+
+	public void setErrorMessage(String message){
+		TextView error = (TextView) findViewById(R.id.lblError);
+		int visibility;
+		if (message.length() > 0) {
+			visibility = View.VISIBLE;
+		} else {
+			visibility = View.INVISIBLE;
+		}
+		error.setVisibility(visibility);
+		error.setText(message);
 	}
+	
+	
+	public void setProgressBarEnabled(boolean enabled) {
+		ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressBar1);
+		int visibility;
+		if (enabled) {
+			visibility = View.VISIBLE;
+		} else {
+			visibility = View.INVISIBLE;
+		}
+		progressBar.setVisibility(visibility);
+	}
+
 }
