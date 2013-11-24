@@ -1,27 +1,57 @@
 package com.example.werewolf;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.os.Bundle;
-import android.app.Activity;
+import android.os.Handler;
+import android.os.Message;
+import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
+import android.util.Log;
 import android.view.Menu;
 import android.widget.TextView;
 
-public class UserActivity extends Activity {
+public class UserActivity extends WerewolfActivity {
 
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	@SuppressLint("HandlerLeak") @Override
+	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_user);
 		
-		//Update the information.
 		refresh();
+		
+		mHandler = new Handler() {
+	        @Override
+	        public void handleMessage(Message msg) {
+				setProgressBarEnabled(false);
+	        	JSONObject json = (JSONObject) msg.obj;
+	    		try {
+	    			String m = json.getString("message");
+					if (m.equals("success")){
+						updatePage(json);
+					} else {
+			    		setErrorMessage(m);
+					}
+				} catch (JSONException e) {
+					Log.e("UserActivity", e.getMessage());
+					setErrorMessage("Server Error");
+				}
+
+	        }
+		};
 
 	}
 	
 	private void refresh(){
-		
-		// Parse and encode the user's input.
-		 TextView userText = (TextView) findViewById(R.id.lblUsername);
+		new AsyncJSONParser(this).execute(WerewolfUrls.GET_ACCOUNT_INFO);		
+		setProgressBarEnabled(true);	
+		setErrorMessage("");
+	}
+	
+	private void updatePage(JSONObject json) {
+
+		TextView userText = (TextView) findViewById(R.id.lblUsername);
 		
 		//Get the user's information from preferences
 		SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", 0); // 0 - for private mode

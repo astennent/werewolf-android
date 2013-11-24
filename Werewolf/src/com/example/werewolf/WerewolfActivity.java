@@ -1,7 +1,14 @@
 package com.example.werewolf;
 
+import java.io.UnsupportedEncodingException;
+
 import android.app.Activity;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
+import android.os.Bundle;
 import android.os.Handler;
+import android.util.Base64;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -31,6 +38,40 @@ public abstract class WerewolfActivity extends Activity{
 			visibility = View.INVISIBLE;
 		}
 		progressBar.setVisibility(visibility);
+	}
+	
+	/* 
+	 * Used by both CreateAccount and Login
+	 */
+	public void launchUserActivity() {
+		Intent intent = new Intent(this, UserActivity.class);
+		startActivity(intent);
+		finish();
+	}
+
+	public void onCreate(Bundle savedInstanceState) {
+		// TODO Auto-generated method stub
+		super.onCreate(savedInstanceState);
+	}
+
+	//Save the input in preferences, where it will be used by the AsyncJSONParser
+	public void SaveAccountInfo(String username, String password){				
+		String text = username + ":" + password;
+
+		byte[] data = null;
+		try {
+			data = text.getBytes("UTF-8");
+		} catch (UnsupportedEncodingException e1) {
+			e1.printStackTrace();
+		}
+		String base64 = Base64.encodeToString(data, Base64.DEFAULT);		
+		
+		
+		SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", 0); // 0 - for private mode
+		Editor editor = pref.edit();
+		editor.putString("HTTP_AUTHORIZATION", base64);
+		editor.putString("username", username);
+		editor.commit();
 	}
 
 }
