@@ -16,10 +16,16 @@ import android.widget.EditText;
 
 public class LoginActivity extends WerewolfActivity {
 		
+	// Used to control whether an error message should be shown 
+	// when the activity attempts login on start.
+	boolean onFirstCheck = true;
+	
 	@SuppressLint("HandlerLeak") @Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
+		
+		checkLogin();
 		
   		final Button btnLogin = (Button) findViewById(R.id.btnLogin);
 		btnLogin.setOnClickListener(new View.OnClickListener() {
@@ -50,7 +56,9 @@ public class LoginActivity extends WerewolfActivity {
 					if (m.equals("success")){
 						launchUserActivity();
 					} else {
-			    		setErrorMessage(m);
+						if (!onFirstCheck) {
+							setErrorMessage(m);
+						}
 					}
 				} catch (JSONException e) {
 					Log.e("LoginActivity", e.getMessage());
@@ -62,16 +70,26 @@ public class LoginActivity extends WerewolfActivity {
 		
 	}
 
-	public void login() {
+	public void login() {		
+		
+		onFirstCheck = false;
 		
 		// Parse and encode the user's input.
 		EditText userText = (EditText) findViewById(R.id.lblUsername);
 		String username = userText.getText().toString();
 		EditText passText = (EditText) findViewById(R.id.txtPassword);
 		String password = passText.getText().toString();
+		
+		if (username.equals("") || password.equals("")) {
+			setErrorMessage("Enter a username and password");
+		} else {
+			SaveAccountInfo(username, password);
+			checkLogin();
+		}
 
-		SaveAccountInfo(username, password);
-				
+	}
+	
+	public void checkLogin(){
 		new AsyncJSONParser(this).execute(WerewolfUrls.PING);
 		setProgressBarEnabled(true);
 		setErrorMessage("");

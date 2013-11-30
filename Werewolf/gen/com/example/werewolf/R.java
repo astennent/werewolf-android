@@ -32,24 +32,49 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int activity_vertical_margin=0x7f050001;
     }
     public static final class drawable {
-        public static final int claw=0x7f020000;
-        public static final int claw_inverted=0x7f020001;
-        public static final int farmer=0x7f020002;
-        public static final int ic_launcher=0x7f020003;
-        public static final int moon=0x7f020004;
-        public static final int wallpaper=0x7f020005;
-        public static final int wallpaper_red=0x7f020006;
-        public static final int wolf=0x7f020007;
+        public static final int almost_empty=0x7f020000;
+        public static final int button_selector=0x7f020001;
+        public static final int claw=0x7f020002;
+        public static final int claw_inverted=0x7f020003;
+        public static final int coin=0x7f020004;
+        public static final int coin_selected=0x7f020005;
+        public static final int empty=0x7f020006;
+        public static final int farmer=0x7f020007;
+        public static final int ic_launcher=0x7f020008;
+        public static final int moon=0x7f020009;
+        public static final int ruins=0x7f02000a;
+        public static final int uncoin=0x7f02000b;
+        public static final int uncoin_selected=0x7f02000c;
+        public static final int wallpaper=0x7f02000d;
+        public static final int wallpaper_farmhouse=0x7f02000e;
+        public static final int wallpaper_halloween=0x7f02000f;
+        public static final int wallpaper_red=0x7f020010;
+        public static final int wallpaper_tree=0x7f020011;
+        public static final int wolf=0x7f020012;
     }
     public static final class id {
-        public static final int action_settings=0x7f09000c;
+        public static final int action_settings=0x7f090019;
+        public static final int badge1=0x7f09000e;
+        public static final int badge2=0x7f09000f;
+        public static final int badge3=0x7f090010;
+        public static final int badge4=0x7f090011;
+        public static final int badge5=0x7f090012;
+        public static final int badge6=0x7f090013;
+        public static final int badge7=0x7f090014;
+        public static final int badge8=0x7f090015;
+        public static final int badge9=0x7f090016;
         public static final int btnCreateAccount=0x7f090007;
+        public static final int btnGames=0x7f090018;
         public static final int btnLaunchCreateAccount=0x7f09000b;
         public static final int btnLogin=0x7f09000a;
+        public static final int lblBadgeDescription=0x7f090017;
+        public static final int lblBadgeName=0x7f090000;
+        public static final int lblBadgePoints=0x7f09000d;
         public static final int lblError=0x7f090008;
+        public static final int lblExperience=0x7f09000c;
         public static final int lblUsername=0x7f090001;
         public static final int progressBar1=0x7f090009;
-        public static final int textView1=0x7f090000;
+        public static final int signout=0x7f09001a;
         public static final int txtConfirmPassword=0x7f090006;
         public static final int txtEmail=0x7f090004;
         public static final int txtFName=0x7f090002;
@@ -69,9 +94,10 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
     public static final class string {
         public static final int action_settings=0x7f060001;
         public static final int app_name=0x7f060000;
-        public static final int dummy_button=0x7f060005;
-        public static final int dummy_content=0x7f060006;
+        public static final int dummy_button=0x7f060006;
+        public static final int dummy_content=0x7f060007;
         public static final int hello_world=0x7f060002;
+        public static final int signout=0x7f060005;
         public static final int title_activity_create_account=0x7f060003;
         public static final int title_activity_user=0x7f060004;
     }

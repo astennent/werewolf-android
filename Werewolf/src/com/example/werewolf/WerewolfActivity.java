@@ -9,6 +9,7 @@ import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Base64;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -31,13 +32,7 @@ public abstract class WerewolfActivity extends Activity{
 	
 	public void setProgressBarEnabled(boolean enabled) {
 		ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressBar1);
-		int visibility;
-		if (enabled) {
-			visibility = View.VISIBLE;
-		} else {
-			visibility = View.INVISIBLE;
-		}
-		progressBar.setVisibility(visibility);
+		progressBar.setEnabled(enabled);
 	}
 	
 	/* 
@@ -72,6 +67,38 @@ public abstract class WerewolfActivity extends Activity{
 		editor.putString("HTTP_AUTHORIZATION", base64);
 		editor.putString("username", username);
 		editor.commit();
+	}
+	
+	public void SignOut(){
+		SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", 0); // 0 - for private mode
+		Editor editor = pref.edit();
+		editor.remove("HTTP_AUTHORIZATION");
+		editor.remove("username");
+		editor.commit();
+		launchLoginActivity();
+	}
+	
+	/* 
+	 * Used when Logging out
+	 */
+	public void launchLoginActivity() {
+		Intent intent = new Intent(this, LoginActivity.class);
+		startActivity(intent);
+		finish();
+	}
+	
+	
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+	    // Handle item selection
+	    switch (item.getItemId()) {
+	        case R.id.signout:
+	            SignOut();
+	            return true;
+	        default:
+	            return super.onOptionsItemSelected(item);
+	    }
 	}
 
 }
