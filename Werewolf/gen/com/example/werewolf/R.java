@@ -53,43 +53,55 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int wolf=0x7f020012;
     }
     public static final class id {
-        public static final int action_settings=0x7f090019;
-        public static final int badge1=0x7f09000e;
-        public static final int badge2=0x7f09000f;
-        public static final int badge3=0x7f090010;
-        public static final int badge4=0x7f090011;
-        public static final int badge5=0x7f090012;
-        public static final int badge6=0x7f090013;
-        public static final int badge7=0x7f090014;
-        public static final int badge8=0x7f090015;
-        public static final int badge9=0x7f090016;
+        public static final int action_settings=0x7f090021;
+        public static final int badge1=0x7f090016;
+        public static final int badge2=0x7f090017;
+        public static final int badge3=0x7f090018;
+        public static final int badge4=0x7f090019;
+        public static final int badge5=0x7f09001a;
+        public static final int badge6=0x7f09001b;
+        public static final int badge7=0x7f09001c;
+        public static final int badge8=0x7f09001d;
+        public static final int badge9=0x7f09001e;
         public static final int btnCreateAccount=0x7f090007;
-        public static final int btnGames=0x7f090018;
-        public static final int btnLaunchCreateAccount=0x7f09000b;
-        public static final int btnLogin=0x7f09000a;
-        public static final int lblBadgeDescription=0x7f090017;
+        public static final int btnCreateGame=0x7f09000f;
+        public static final int btnGames=0x7f090020;
+        public static final int btnLaunchCreateAccount=0x7f090013;
+        public static final int btnLogin=0x7f090012;
+        public static final int gameButtons=0x7f090011;
+        public static final int lblBadgeDescription=0x7f09001f;
         public static final int lblBadgeName=0x7f090000;
-        public static final int lblBadgePoints=0x7f09000d;
+        public static final int lblBadgePoints=0x7f090015;
         public static final int lblError=0x7f090008;
-        public static final int lblExperience=0x7f09000c;
+        public static final int lblExperience=0x7f090014;
+        public static final int lblNewGame=0x7f09000a;
         public static final int lblUsername=0x7f090001;
         public static final int progressBar1=0x7f090009;
-        public static final int signout=0x7f09001a;
+        public static final int scrollView1=0x7f090010;
+        public static final int signout=0x7f090022;
         public static final int txtConfirmPassword=0x7f090006;
+        public static final int txtCycleLength=0x7f09000c;
         public static final int txtEmail=0x7f090004;
         public static final int txtFName=0x7f090002;
+        public static final int txtGameName=0x7f09000b;
+        public static final int txtKillRange=0x7f09000e;
         public static final int txtLName=0x7f090003;
         public static final int txtPassword=0x7f090005;
+        public static final int txtScentRange=0x7f09000d;
     }
     public static final class layout {
         public static final int activity_create_account=0x7f030000;
-        public static final int activity_login=0x7f030001;
-        public static final int activity_user=0x7f030002;
+        public static final int activity_create_game=0x7f030001;
+        public static final int activity_lobby=0x7f030002;
+        public static final int activity_login=0x7f030003;
+        public static final int activity_user=0x7f030004;
     }
     public static final class menu {
         public static final int create_account=0x7f080000;
-        public static final int login=0x7f080001;
-        public static final int user=0x7f080002;
+        public static final int create_game=0x7f080001;
+        public static final int lobby=0x7f080002;
+        public static final int login=0x7f080003;
+        public static final int user=0x7f080004;
     }
     public static final class string {
         public static final int action_settings=0x7f060001;
@@ -99,6 +111,8 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int hello_world=0x7f060002;
         public static final int signout=0x7f060005;
         public static final int title_activity_create_account=0x7f060003;
+        public static final int title_activity_create_game=0x7f060009;
+        public static final int title_activity_lobby=0x7f060008;
         public static final int title_activity_user=0x7f060004;
     }
     public static final class style {

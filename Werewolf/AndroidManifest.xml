@@ -34,6 +34,14 @@
             android:label="@string/title_activity_user"
             android:theme="@style/FullscreenTheme" >
         </activity>
+        <activity
+            android:name="com.example.werewolf.LobbyActivity"
+            android:label="@string/title_activity_lobby" >
+        </activity>
+        <activity
+            android:name="com.example.werewolf.CreateGameActivity"
+            android:label="@string/title_activity_create_game" >
+        </activity>
     </application>
 
 </manifest>

@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.util.Log;
 import android.view.Menu;
@@ -61,8 +62,19 @@ public class UserActivity extends WerewolfActivity {
 		experiencePoints = (TextView) findViewById(R.id.lblExperience);
 
 		initBadges();
+		
+		Button btnGames = (Button) findViewById(R.id.btnGames);
+		btnGames.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				launchGamesLobby();
+			}
+		});	
+
 
 	}
+	
+	
 
 	private void clickBadge(int badgeNumber) {
 		if (badgeNumber == previousBadge) {
@@ -231,5 +243,9 @@ public class UserActivity extends WerewolfActivity {
 		});
 
 	}
-
+	
+	public void launchGamesLobby() {
+		Intent intent = new Intent(this, LobbyActivity.class);
+		startActivity(intent);
+	}
 }
