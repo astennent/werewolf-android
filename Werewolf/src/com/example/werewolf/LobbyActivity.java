@@ -7,6 +7,7 @@ import org.json.JSONObject;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -28,6 +29,7 @@ public class LobbyActivity extends WerewolfActivity {
 		refresh();
 	}
 	
+	@SuppressLint("HandlerLeak")
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -64,12 +66,7 @@ public class LobbyActivity extends WerewolfActivity {
 			public void onClick(View v) {
 				launchCreateGame();
 			}
-		});
-		
-				
-		
-		
-		
+		});		
 	}
 	
 	public void refresh(){
@@ -90,7 +87,7 @@ public class LobbyActivity extends WerewolfActivity {
 			    boolean isWolf = jsonPlayer.getBoolean("is_wolf");
 			    boolean isDead = jsonPlayer.getBoolean("is_dead");
 
-				addGameToList(gameName, isWolf, inProgress, isDead);
+				addGameToList(gameId, gameName, isWolf, inProgress, isDead);
 			}
 
 
@@ -104,9 +101,16 @@ public class LobbyActivity extends WerewolfActivity {
 		buttonList.removeAllViews();
 	}
 	
-	private void addGameToList(String gameName, boolean isWolf, boolean inProgress, boolean isDead){
+	private void addGameToList(final int gameId, String gameName, boolean isWolf, boolean inProgress, boolean isDead){
         Button myButton = new Button(this);
+        myButton.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				launchGame(gameId);
+			}
+		});
         myButton.setText(gameName);
+        myButton.setTextColor(0xffeeeeee);
 
         LayoutParams lp = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
         buttonList.addView(myButton, lp);
@@ -123,6 +127,12 @@ public class LobbyActivity extends WerewolfActivity {
 	//Starts the new game activity.
 	public void launchCreateGame() {
 		Intent intent = new Intent(this, CreateGameActivity.class);
+		startActivity(intent);
+	}
+	
+	public void launchGame(int gameId) {
+		Intent intent = new Intent(this, GameActivity.class);
+		intent.putExtra("gameId", gameId);
 		startActivity(intent);
 	}
 

@@ -3,6 +3,7 @@ package com.example.werewolf;
 import java.io.UnsupportedEncodingException;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -13,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public abstract class WerewolfActivity extends Activity{
 	Handler mHandler;
@@ -39,8 +41,15 @@ public abstract class WerewolfActivity extends Activity{
 	 * Used by both CreateAccount and Login
 	 */
 	public void launchUserActivity() {
+		
+		//Start the User page
 		Intent intent = new Intent(this, UserActivity.class);
 		startActivity(intent);
+		
+		//Also start the GPS service
+		Intent intentGPS = new Intent(this, WolvesIntentService.class);
+		startService(intentGPS);
+		
 		finish();
 	}
 
@@ -76,6 +85,13 @@ public abstract class WerewolfActivity extends Activity{
 		editor.remove("username");
 		editor.commit();
 		launchLoginActivity();
+	}
+	
+	public void makeToast(String text){
+		Context context = getApplicationContext();
+		int duration = Toast.LENGTH_SHORT;
+		Toast toast = Toast.makeText(context, text, duration);
+		toast.show();
 	}
 	
 	/* 

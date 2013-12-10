@@ -54,6 +54,7 @@ public class LoginActivity extends WerewolfActivity {
 	    		try {
 	    			String m = json.getString("message");
 					if (m.equals("success")){
+												
 						launchUserActivity();
 					} else {
 						if (!onFirstCheck) {

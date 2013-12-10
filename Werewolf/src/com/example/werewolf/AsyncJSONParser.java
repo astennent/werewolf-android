@@ -38,6 +38,7 @@ public class AsyncJSONParser extends AsyncTask<String, Void, JSONObject> {
 	public String json = "";
 	private List<NameValuePair> params = new ArrayList<NameValuePair>();
 	private WerewolfActivity caller;
+	private WolvesIntentService serviceCaller;
 
 	// default constructor, includes caller for preferences access
 	public AsyncJSONParser(WerewolfActivity caller) {
@@ -50,13 +51,26 @@ public class AsyncJSONParser extends AsyncTask<String, Void, JSONObject> {
 		addParameter(name, value);
 	}
 
+	public AsyncJSONParser(WolvesIntentService wolvesIntentService) {
+		this.serviceCaller = wolvesIntentService;
+	}
+
 	@Override
 	protected JSONObject doInBackground(String... urls) {
 
 		String url = urls[0];
 		
 		//Get the user's information from preferences
-		SharedPreferences pref = caller.getApplicationContext().getSharedPreferences("MyPref", 0); // 0 - for private mode
+		SharedPreferences pref;
+		if (caller != null){
+			pref = caller.getApplicationContext().getSharedPreferences("MyPref", 0); // 0 - for private mode
+		} else if (serviceCaller != null){
+			pref = serviceCaller.getApplicationContext().getSharedPreferences("MyPref", 0); // 0 - for private mode
+		} else {
+			Log.e("AsyncJSONParser", "INVALID CALLER");
+			return null;
+		}
+		
 		String auth = pref.getString("HTTP_AUTHORIZATION", null);
 		addParameter("HTTP_AUTHORIZATION", auth);	
 		
@@ -109,7 +123,11 @@ public class AsyncJSONParser extends AsyncTask<String, Void, JSONObject> {
 
 		Message msg = new Message();
 		msg.obj = jObj;
-		caller.mHandler.sendMessage(msg);
+		if (caller != null) {
+			caller.mHandler.sendMessage(msg);
+		} else if (serviceCaller != null) {
+			serviceCaller.mHandler.sendMessage(msg);
+		}
 		
 		//Dummy return isn't used.
 		return null;

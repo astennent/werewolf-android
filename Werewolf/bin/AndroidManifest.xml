@@ -9,6 +9,10 @@
         android:targetSdkVersion="16" />
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" >
+    </uses-permission>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" >
+    </uses-permission>
 
     <application
         android:allowBackup="true"
@@ -42,6 +46,15 @@
             android:name="com.example.werewolf.CreateGameActivity"
             android:label="@string/title_activity_create_game" >
         </activity>
+        <activity
+            android:name="com.example.werewolf.GameActivity"
+            android:label="@string/title_activity_game" >
+        </activity>
+
+        <service
+            android:name="com.example.werewolf.WolvesIntentService"
+            android:exported="false" >
+        </service>
     </application>
 
 </manifest>

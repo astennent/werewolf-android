@@ -107,13 +107,7 @@ public class CreateGameActivity extends WerewolfActivity {
 	}
 	
 	private void alertGameMade(){
-		Context context = getApplicationContext();
-		CharSequence text = "Created game";
-		int duration = Toast.LENGTH_SHORT;
-
-		Toast toast = Toast.makeText(context, text, duration);
-		toast.show();
-		
+		makeToast("Created game");		
 		finish();		
 	}
 
